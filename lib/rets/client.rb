@@ -152,13 +152,13 @@ module Rets
     end
 
     # Returns an array of specified objects.
+    #
+    # resource     RETS resource as defined in the resource metadata.
+    # object_type  an object type defined in the object metadata.
+    # resource_id  the KeyField value of the given resource instance.
+    # object_ids can be "*" or a colon delimited string of integers or an array of integers.
     def objects(object_ids, opts = {})
-      response = case object_ids
-        when String then fetch_object(object_ids, opts)
-        when Array  then fetch_object(object_ids.join(","), opts)
-        else raise ArgumentError, "Expected instance of String or Array, but got #{object_ids.inspect}."
-      end
-
+      response = fetch_object(Array(object_ids).join(':'), opts)
       create_parts_from_response(response)
     end
 
@@ -193,9 +193,9 @@ module Rets
     # resource     RETS resource as defined in the resource metadata.
     # object_type  an object type defined in the object metadata.
     # resource_id  the KeyField value of the given resource instance.
-    # object_id    can be "*" or a colon delimited string of integers or an array of integers.
+    # object_id    must be a single integer object id.
     def object(object_id, opts = {})
-      response = fetch_object(Array(object_id).join(':'), opts)
+      response = fetch_object(object_id, opts)
       response.body
     end
 
