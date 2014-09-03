@@ -353,10 +353,11 @@ module Rets
             reply_text = (rets_element.attr("ReplyText") || rets_element.attr("replyText")).value
             reply_code = (rets_element.attr("ReplyCode") || rets_element.attr("replyCode")).value.to_i
 
-            if reply_code.nonzero?
-              raise InvalidRequest.new(reply_code, reply_text)
-            else
+            if reply_code == 0 || reply_code == 20201
+              # Fine or no matching records found
               return
+            else
+              raise InvalidRequest.new(reply_code, reply_text)
             end
           rescue Nokogiri::XML::SyntaxError
             #Not xml
