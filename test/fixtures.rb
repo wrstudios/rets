@@ -4,6 +4,12 @@ RETS_ERROR = <<-XML
 </RETS>
 XML
 
+RETS_NO_MATCHING_RECORDS = <<-XML
+<?xml version="1.0"?>
+<RETS ReplyCode="20201" ReplyText="No matching records">
+</RETS>
+XML
+
 RETS_REPLY = <<-XML
 <?xml version="1.0"?>
 <RETS ReplyCode="0" ReplyText="OK">

@@ -233,4 +233,17 @@ class TestClient < MiniTest::Test
     )
   end
 
+  def test_reply_with_rets_error
+    response = stub(:body => RETS_ERROR)
+    assert_raises Rets::InvalidRequest do
+      Rets::Client::ErrorChecker.check(response)
+    end
+  end
+
+  def test_reply_with_rets_status_error
+    response = stub(:body => RETS_NO_MATCHING_RECORDS)
+    Rets::Client::ErrorChecker.check(response)
+    # Should not raise an error
+  end
+
 end
